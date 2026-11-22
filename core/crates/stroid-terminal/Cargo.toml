@@ -1,0 +1,12 @@
+[package]
+name = "stroid-terminal"
+description = "Pseudo-terminal sessions and a VT/xterm screen emulator."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[dependencies]
+libc = "0.2"
+vte = "0.15"
+unicode-width = "0.2"

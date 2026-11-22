@@ -1,6 +1,6 @@
 [package]
 name = "stroid-jni"
-description = "JNI bridge exposing stroid-core to the Android app."
+description = "JNI bridge exposing stroid-core and stroid-terminal to the Android app."
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -13,4 +13,5 @@ crate-type = ["cdylib"]
 
 [dependencies]
 stroid-core = { path = "../stroid-core" }
+stroid-terminal = { path = "../stroid-terminal" }
 jni = "0.21"

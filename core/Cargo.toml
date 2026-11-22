@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["crates/stroid-core", "crates/stroid-jni"]
+members = ["crates/stroid-core", "crates/stroid-terminal", "crates/stroid-jni"]
 
 [workspace.package]
 version = "0.1.0"

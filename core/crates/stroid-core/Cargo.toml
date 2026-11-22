@@ -1,9 +1,13 @@
 [package]
 name = "stroid-core"
-description = "Platform-independent core of Stroid (editor, terminal, git, search)."
+description = "Platform-independent core of Stroid (editor, search)."
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
 publish.workspace = true
 
 [dependencies]
+# Only LF is treated as a line break; CR is kept as ordinary text so that
+# line/column math is predictable for the UI.
+ropey = { version = "1.6", default-features = false, features = ["simd"] }
+regex = "1"

@@ -1,8 +1,9 @@
 //! Stroid core: platform-independent logic shared with the Android app.
 //!
-//! Phase 0 only exposes a version string and a greeting so the Kotlin <-> Rust
-//! bridge can be verified end to end. Editor, terminal, git and search modules
-//! are added in later phases (see the project README).
+//! All positions exposed by the editor are Unicode scalar (`char`) offsets, not
+//! bytes and not UTF-16 units. Callers on the JVM side must convert.
+
+pub mod editor;
 
 /// Version of the native core, taken from Cargo metadata.
 pub fn version() -> &'static str {
