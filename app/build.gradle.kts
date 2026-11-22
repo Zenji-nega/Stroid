@@ -15,6 +15,8 @@ val cargoNdkBuild = tasks.register<Exec>("cargoNdkBuild") {
     commandLine(
         "cargo", "ndk",
         "-t", "arm64-v8a",
+        // Match minSdk: the PTY code uses libc functions that need API 23+.
+        "--platform", "26",
         "-o", rustJniLibs.absolutePath,
         "build", "--release", "-p", "stroid-jni",
     )
