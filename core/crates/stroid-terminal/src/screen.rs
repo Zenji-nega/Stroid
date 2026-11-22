@@ -364,8 +364,8 @@ impl Screen {
     fn erase_cells(&mut self, row: usize, from: usize, to: usize) {
         let blank = self.blank();
         let to = to.min(self.cols);
-        for c in from..to {
-            self.grid[row][c] = blank;
+        if from < to {
+            self.grid[row][from..to].fill(blank);
         }
         self.fix_wide_boundary(row, from, to);
     }
