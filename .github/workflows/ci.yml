@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  rust:
+    name: Rust (fmt, clippy, test)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: core
+      - name: Format
+        run: cargo fmt --all -- --check
+        working-directory: core
+      - name: Clippy
+        run: cargo clippy --workspace --all-targets -- -D warnings
+        working-directory: core
+      - name: Test
+        run: cargo test --workspace
+        working-directory: core
+
+  apk:
+    name: Android APK (arm64-v8a)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-linux-android
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: core
+      - name: Install cargo-ndk
+        run: cargo install cargo-ndk --locked
+      - name: Locate Android NDK
+        run: |
+          # GitHub-hosted Ubuntu runners ship with an NDK preinstalled.
+          if [ -z "$ANDROID_NDK_HOME" ] || [ ! -d "$ANDROID_NDK_HOME" ]; then
+            echo "ANDROID_NDK_HOME is not set or missing" >&2
+            exit 1
+          fi
+          echo "Using NDK at $ANDROID_NDK_HOME"
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Build debug APK
+        run: ./gradlew --no-daemon assembleDebug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: stroid-debug-apk
+          path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error

@@ -1,0 +1,9 @@
+[package]
+name = "stroid-core"
+description = "Platform-independent core of Stroid (editor, terminal, git, search)."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[dependencies]
