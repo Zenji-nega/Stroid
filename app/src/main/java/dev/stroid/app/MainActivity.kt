@@ -3,59 +3,11 @@ package dev.stroid.app
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import dev.stroid.app.ui.StroidApp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val bootstrap = Bootstrap(this)
-        val layoutReady = bootstrap.ensureLayout()
-        val nativeVersion = NativeBridge.version()
-        val greeting = NativeBridge.greet("Stroid")
-
-        setContent {
-            MaterialTheme {
-                Surface(modifier = Modifier.fillMaxSize()) {
-                    StatusScreen(
-                        nativeVersion = nativeVersion,
-                        greeting = greeting,
-                        prefixPath = bootstrap.prefix.absolutePath,
-                        layoutReady = layoutReady,
-                        bootstrapInstalled = bootstrap.isInstalled,
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun StatusScreen(
-    nativeVersion: String,
-    greeting: String,
-    prefixPath: String,
-    layoutReady: Boolean,
-    bootstrapInstalled: Boolean,
-) {
-    Column(modifier = Modifier.padding(24.dp)) {
-        Text("Stroid", style = MaterialTheme.typography.headlineMedium)
-        Spacer(Modifier.height(16.dp))
-        Text("Native core: v$nativeVersion")
-        Text(greeting)
-        Spacer(Modifier.height(16.dp))
-        Text("PREFIX: $prefixPath")
-        Text("Layout created: $layoutReady")
-        Text("Base packages installed: $bootstrapInstalled")
+        setContent { StroidApp() }
     }
 }
