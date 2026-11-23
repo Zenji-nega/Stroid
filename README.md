@@ -138,3 +138,10 @@ Termux، AndroidIDE، Sora Editor، Acode، Helix/Zed (للأفكار في نو�
 
 ## 7. الترخيص
 يُحدد لاحقاً. ملاحظة: كود Termux (terminal-emulator) مرخّص GPLv3، لذلك نكتب مكوّن الـ terminal بأنفسنا بـ Rust لتفادي قيود الترخيص.
+
+## Phase 1 UI status
+
+- **In-app keyboard** (English + Arabic, symbol layers) used by every text input, so the keyboard sits *above* the dock and never covers it. The system keyboard is never shown.
+- **One-thumb layout**: all touch controls at the bottom; cursor-pad key (drag to move the caret); pair keys `( ) [ ] { } " "` wrap the selection; word-completion chips from the open document.
+- **Left-hand mode** (Files → toggle) mirrors the dock, shortcut row, keyboard edge keys and preview bar.
+- Editor (Rust rope core, Canvas rendering, highlighting, autosave), terminal (PTY + xterm emulation), files, HTML preview (Run). Git and Agent screens are placeholders.
